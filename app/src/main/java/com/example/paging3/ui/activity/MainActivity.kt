@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindViews() {
+        characteradapter = CharacterAdapter()
         lifecycleScope.launch {
             viewModel.listData.collect { pagingData ->
                 characteradapter.submitData(pagingData)
