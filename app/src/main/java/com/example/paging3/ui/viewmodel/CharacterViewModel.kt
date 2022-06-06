@@ -11,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CharacterViewModel  @Inject constructor(private val apiService: ApiService) : ViewModel() {
+class CharacterViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
 
     val listData = Pager(PagingConfig(pageSize = 1)) {
         CharacterPagingSource(apiService)

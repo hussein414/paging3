@@ -14,10 +14,10 @@ class CharacterPagingSource(private val apiService: ApiService) : PagingSource<I
         return try {
             val currentPage = params.key ?: 1
             val responsePage = apiService.getAllCharacters(currentPage)
-            val data = responsePage.body()?.results ?: emptyList()
             val responseData = mutableListOf<Result>()
-
+            val data = responsePage.body()?.results ?: emptyList()
             responseData.addAll(data)
+
             LoadResult.Page(
                 data = responseData,
                 prevKey = if (currentPage == 1) null else -1,

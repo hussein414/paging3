@@ -4,13 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
 import com.example.paging3.data.model.Result
 import com.example.paging3.databinding.CharacterItemBinding
 import com.example.paging3.ui.adapter.CharacterAdapter.CharacterViewHolder
 
 class CharacterAdapter : PagingDataAdapter<Result, CharacterViewHolder>(diffCallback) {
+
+    inner class CharacterViewHolder(val binding: CharacterItemBinding) :
+        ViewHolder(binding.root)
 
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<Result>() {
@@ -27,12 +30,14 @@ class CharacterAdapter : PagingDataAdapter<Result, CharacterViewHolder>(diffCall
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.binding.apply {
-            "${currentItem?.name}".also { textViewName.text = it }
+            holder.itemView.apply {
+                "${currentItem?.name}".also { textViewName.text = it }
 
-            val imageLink = currentItem?.image
-            imageView.load(imageLink) {
-                crossfade(true)
-                crossfade(1000)
+                val imageLink = currentItem?.image
+                imageView.load(imageLink) {
+                    crossfade(true)
+                    crossfade(1000)
+                }
             }
         }
     }
@@ -44,8 +49,5 @@ class CharacterAdapter : PagingDataAdapter<Result, CharacterViewHolder>(diffCall
         )
     }
 
-
-    inner class CharacterViewHolder(val binding: CharacterItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
 
 }

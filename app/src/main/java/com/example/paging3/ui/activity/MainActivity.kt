@@ -2,6 +2,7 @@ package com.example.paging3.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -25,15 +26,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindViews() {
         characteradapter = CharacterAdapter()
-        lifecycleScope.launch {
-            viewModel.listData.collect { pagingData ->
-                characteradapter.submitData(pagingData)
-            }
-        }
         binding.recyclerView.apply {
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             adapter = characteradapter
             setHasFixedSize(true)
+        }
+        lifecycleScope.launch {
+            viewModel.listData.collect { pagingData ->
+                Log.d("TAG", "load: $pagingData")
+                characteradapter.submitData(pagingData)
+            }
         }
     }
 }
